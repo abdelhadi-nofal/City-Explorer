@@ -11,17 +11,17 @@ server.get('/',(req,res) =>{
   res.send('you are live');
 });
 
-server.listen(PORT,()=>{
-  console.log(`listening to ${PORT}`);
-});
 
 
-server.get('/location'),(req,res) =>{
+
+server.get('/location',(req,res) =>{
   let locationData = require('./data/location.json');
+  console.log(locationData);
   let locationRes = new Location(locationData);
   res.send(locationRes);
-  console.log(locationData);
-};
+  
+
+});
 
 
 
@@ -33,7 +33,9 @@ function Location(locData){
   this.longitude = locData[0].lon;
 }
 
-
+server.listen(PORT,()=>{
+    console.log(`listening to ${PORT}`);
+  });
 // server.get('/weather'),(req,res) =>{
 //   let weatherData = require('./data/weather.json');
 //   let weathernRes = new Weather(weatherData);
