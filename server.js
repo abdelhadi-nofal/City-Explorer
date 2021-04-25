@@ -34,15 +34,15 @@ function Location(locData){
 }
 
 
-server.get('/weather'),(req,res) =>{
-  let weatherData = require('./data/weather.json');
-  let weathernRes = new Weather(weatherData);
-  res.send(weathernRes);
-  console.log(weathernRes);
-};
+// server.get('/weather'),(req,res) =>{
+//   let weatherData = require('./data/weather.json');
+//   let weathernRes = new Weather(weatherData);
+//   res.send(weathernRes);
+//   console.log(weathernRes);
+// };
 
 
-function Weather(forecast, time) {
-  this.forecast = forecast;
-  this.time = time;
-}
+// function Weather(forecast, time) {
+//   this.forecast = forecast;
+//   this.time = time;
+// }
