@@ -102,7 +102,7 @@ function Weather(weatherData) {
 }
 
 function Parks(parksData) {
-  this.name = parksData.activities.name;
+  this.name = parksData.name;
   this.address = `"${parksData.addresses[0].line1}" "${parksData.addresses[0].city}" "${parksData.addresses[0].stateCode}" "${parksData.addresses[0].postalCode}"`;
   this.fee = '0.00';
   this.description = parksData.description;
@@ -115,56 +115,6 @@ function Parks(parksData) {
 server.listen(PORT,()=>{
   console.log(`listening to ${PORT}`);
 });
-
-
-
-//////////////////////////////////////////////////////////////////
-
-
-
-
-// server.get('/location',(req,res) =>{
-//   let cityName = req.query.city;
-//   console.log(cityName);
-//   let locationData = require('./data/location.json');
-//   let locationRes = new Location(locationData);
-//   res.send(locationRes);
-
-// });
-
-
-
-
-// function Location(locData){
-//   this.search_query = locData[0].display_name.split(',')[0];
-//   this.formatted_query = locData[0].display_name;
-//   this.latitude = locData[0].lat;
-//   this.longitude = locData[0].lon;
-// }
-
-
-
-
-
-// server.get('/weather',(req, res) =>{
-//   const weatherData = require('./data/weather.json');
-//   let weatherArr = [];
-//   weatherData.data.forEach(item =>{
-//     const weather = new Weather(item);
-//     weatherArr.push(weather);
-//   });
-//   res.send(weatherArr);
-// });
-
-
-// function Weather(weatherData) {
-//   this.forecast = weatherData.weather.description;
-//   this.time = weatherData.valid_date;
-// }
-
-// server.get('*',(req,res) =>{
-//   res.status(500).send('Sorry, something went wrong');
-// });
 
 
 
