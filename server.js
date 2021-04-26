@@ -176,3 +176,15 @@ server.listen(PORT,()=>{
 
 
 
+
+
+function Weather(forecast, time) {
+  this.forecast = forecast;
+  this.time = new Date(time).toString().slice(0, 15);
+}
+
+
+server.get('*',(req,res) =>{
+  res.status(500).send('Sorry, something went wrong');
+});
+
