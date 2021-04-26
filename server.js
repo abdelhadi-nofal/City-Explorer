@@ -101,7 +101,6 @@ function Weather(weatherData) {
   this.forecast = weatherData.weather.description;
   this.time = new Date(weatherData.valid_date).toString().slice(0, 15);
 
-
 }
 
 function Parks(parksData) {
@@ -174,17 +173,4 @@ server.listen(PORT,()=>{
 
 
 
-
-
-
-
-function Weather(forecast, time) {
-  this.forecast = forecast;
-  this.time = new Date(time).toString().slice(0, 15);
-}
-
-
-server.get('*',(req,res) =>{
-  res.status(500).send('Sorry, something went wrong');
-});
 
