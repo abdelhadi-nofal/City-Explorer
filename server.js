@@ -12,6 +12,9 @@ server.use(cors());
 
 const superagent = require('superagent');
 
+const pg = require('pg');
+const client= new pg.Client(process.env.DATABASE_URL);
+
 const PORT = process.env.PORT || 3000;
 
 // Routes Definition
@@ -112,11 +115,18 @@ function Parks(parksData) {
 //////////////////////////////////////////////////////
 
 
-server.listen(PORT,()=>{
-  console.log(`listening to ${PORT}`);
-});
 
+client.connect()
+  .then(() => {
+    server.listen(PORT, () =>
+      console.log(`listening on ${PORT}`)
+    );
 
+  });
+
+// server.listen(PORT,()=>{
+//   console.log(`listening to ${PORT}`);
+// });
 
 
 
