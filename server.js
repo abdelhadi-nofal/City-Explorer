@@ -68,7 +68,7 @@ function parksHandler(req,res){
   let city = req.query.search_query;
   let key = process.env.PARKS_API_KEY;
 
-  let URL = `https://developer.nps.gov/api/v1/parks?q=${city}&api_key=${key}`;
+  let URL = `https://developer.nps.gov/api/v1/parks?q=${city}&api_key=${key}&limit=10`;
 
   superagent.get(URL)
     .then(parksData => {
