@@ -46,9 +46,9 @@ function locationHandler(req,res){
 }
 
 function weatherHandler(req,res){
-  let city = req.query.city;
+  let city = req.query.search_query;
   let key = process.env.WEATHER_API_KEY;
-  let URL = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&key=${key}`;
+  let URL = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&key=${key}&days=8`;
 
   superagent.get(URL)
     .then(weatherData => {
@@ -65,7 +65,7 @@ function weatherHandler(req,res){
 }
 
 function parksHandler(req,res){
-  let city = req.query.city;
+  let city = req.query.search_query;
   let key = process.env.PARKS_API_KEY;
 
   let URL = `https://developer.nps.gov/api/v1/parks?q=${city}&api_key=${key}`;
