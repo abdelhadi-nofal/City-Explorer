@@ -13,7 +13,7 @@ server.use(cors());
 const superagent = require('superagent');
 
 const pg = require('pg');
-const client= new pg.Client(process.env.DATABASE_URL);
+const client= new pg.Client(process.env.DATABASE_URL)|| new pg.Client({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
 //
 const PORT = process.env.PORT || 3000;
 
