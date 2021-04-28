@@ -114,7 +114,7 @@ function parksHandler(req,res){
     });
 }
 
-//http://localhost:4000/movies?api_key=4d1d4aa4d4b6a6c928e854be86e02ba9&query=seattle&language=de-DE&region=DE
+//http://localhost:4000/movies?api_key=4d1d4aa4d4b6a6c928e854be86e02ba9&search_query=seattle&language=de-DE&region=DE
 function moviesHandler(req,res){
   let city = req.query.search_query;
   let key = process.env.MOVIE_API_KEY;
@@ -165,11 +165,11 @@ function Parks(parksData) {
 function Movies(moviesData) {
   this.title = moviesData.title;
   this.overview = moviesData.overview ;
-  this.vote_average = moviesData.vote_average;
-  this.vote_count = moviesData.vote_count;
-  this.poster_path = moviesData.poster_path;
+  this.average_votes = moviesData.vote_average;
+  this.total_votes = moviesData.vote_count;
+  this.image_url = `https://image.tmdb.org/t/p/w500${moviesData.poster_path}`;
   this.popularity = moviesData.popularity;
-  this.release_date = moviesData.release_date;
+  this.released_on = moviesData.release_date;
 }
 
 //////////////////////////////////////////////////////
