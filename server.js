@@ -13,7 +13,7 @@ server.use(cors());
 const superagent = require('superagent');
 
 const pg = require('pg');
-const client= new pg.Client(process.env.DATABASE_URL)|| new pg.Client({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
+const client= new pg.Client(process.env.DATABASE_URL);
 //
 const PORT = process.env.PORT || 3000;
 
@@ -116,7 +116,7 @@ function parksHandler(req,res){
 
 //http://localhost:4000/movies?api_key=4d1d4aa4d4b6a6c928e854be86e02ba9&query=seattle&language=de-DE&region=DE
 function moviesHandler(req,res){
-  let city = req.query.query;
+  let city = req.query.search_query;
   let key = process.env.MOVIE_API_KEY;
   let URL = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${city}&language=de-DE&region=DE`;
 
