@@ -52,29 +52,35 @@ function locationHandler(req,res){
   const cityName = req.query.city;
   let key = process.env.GEOCODE_API_KEY ;
   let URL = `https://us1.locationiq.com/v1/search.php?key=${key}&q=${cityName}&format=json`;
-  // let SQL = `SELECT * FROM locations`;
-
-  superagent.get(URL)
-    .then(apiData =>{
-      // console.log(apiData);
-      const locationData  = new Location (cityName ,apiData.body);
-      let SQLINSERT = `INSERT INTO locations (search_query,formatted_query,latitude,longitude)
-       VALUES ($1,$2,$3,$4) RETURNING *;`;
-      let safeValues = [locationData.search_query, locationData.formatted_query, locationData.latitude, locationData.longitude];
-      client.query(SQLINSERT,safeValues)
-        .then(data =>{
-          res.send(data.rows[0]);
-        });
+  let SQL = `SELECT * FROM locations WHERE search_query = $1`;
 
 
-    })
-    .catch((err) =>{
-      res.send(err);
+  client.query(SQL,[cityName])
+    .then(data =>{
+      if(data.rowCount>0){
+        res.send(data.rows[0]);
+      }else{
+        superagent.get(URL)
+          .then(apiData =>{
+          // console.log(apiData);
+            const locationData  = new Location (cityName ,apiData.body);
+            let SQLINSERT = `INSERT INTO locations (search_query,formatted_query,latitude,longitude)
+           VALUES ($1,$2,$3,$4) RETURNING *;`;
+            let safeValues = [locationData.search_query, locationData.formatted_query, locationData.latitude, locationData.longitude];
+            client.query(SQLINSERT,safeValues)
+              .then(data =>{
+                res.send(data.rows[0]);
+              });
+
+
+          })
+          .catch((err) =>{
+            res.send(err);
+          });
+      }
     });
-
-
-
 }
+
 
 function weatherHandler(req,res){
   let city = req.query.search_query;
