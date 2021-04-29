@@ -13,7 +13,12 @@ server.use(cors());
 const superagent = require('superagent');
 
 const pg = require('pg');
-const client= new pg.Client(process.env.DATABASE_URL);
+// const client= new pg.Client(process.env.DATABASE_URL);
+
+const client = new pg.Client( {
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.LOCALLY ? false : {rejectUnauthorized: false}
+} );
 //
 const PORT = process.env.PORT || 3000;
 
@@ -140,6 +145,10 @@ function moviesHandler(req,res){
 
 
 }
+
+//https://api.yelp.com/v3/businesses/search?location=seattle&limit=5
+
+
 
 function erorrHandler(req,res){
   res.status(500).send('Sorry, something went wrong');
