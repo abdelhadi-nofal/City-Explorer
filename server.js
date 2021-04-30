@@ -26,6 +26,7 @@ server.get('/location',locationHandler);
 server.get('/weather',weatherHandler);
 server.get('/parks',parksHandler);
 server.get('/movies',moviesHandler);
+server.get('/yelp',yelpHandler);
 server.use(erorrHandler);
 
 // Functions
@@ -142,8 +143,24 @@ function moviesHandler(req,res){
 
 
 }
+//http://localhost:4000/yelp?search_query=seattle&page=1
+function yelpHandler(req, res) {
+  let key = process.env.YELP_API_KEY;
+  let page = req.query.page;
+  let numPerPage = 5;
+  let start = ((page - 1) * numPerPage + 1);
+  let city = req.query.search_query;
+  let URL = `https://api.yelp.com/v3/businesses/search?location=${city}&limit=${numPerPage}&offset=${start}`;
+  superagent.get(URL)
+    .set('Authorization', `Bearer ${key}`)
+    .then(yelpData => {
+      let yelpArr = yelpData.body.businesses.map(val => new Yelp(val));
+      res.send(yelpArr);
+    }).catch((err) =>{
+      res.send(err);
+    });
+}
 
-//https://api.yelp.com/v3/businesses/search?location=seattle&limit=5
 
 
 
@@ -182,6 +199,14 @@ function Movies(moviesData) {
   this.image_url = `https://image.tmdb.org/t/p/w500${moviesData.poster_path}`;
   this.popularity = moviesData.popularity;
   this.released_on = moviesData.release_date;
+}
+
+function Yelp(yelpData) {
+  this.name = yelpData.name;
+  this.image_url = yelpData.image_url;
+  this.price = yelpData.price;
+  this.rating = yelpData.rating;
+  this.url = yelpData.url;
 }
 
 //////////////////////////////////////////////////////
